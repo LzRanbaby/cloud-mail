@@ -1,0 +1,99 @@
+/* Zone Mail liquid-glass skin v2 - full blue, glass unchanged.
+   Dark blue base, translucent panels with blur + saturate, rounded corners.
+   Mobile: mailbox list takes full width, full email address is never cut off. */
+:root {
+  --el-color-primary: #2563eb;
+  --el-color-primary-light-3: #60a5fa;
+  --el-color-primary-light-5: #93c5fd;
+  --el-color-primary-light-7: #bfdbfe;
+  --el-color-primary-light-9: #dbeafe;
+  --el-bg-color: #0f172a;
+  --el-bg-color-page: #0f172a;
+  --el-fill-color: rgba(255,255,255,0.10);
+  --el-fill-color-light: rgba(255,255,255,0.08);
+  --el-fill-color-lighter: rgba(255,255,255,0.06);
+  --el-text-color-primary: #f8fafc;
+  --el-text-color-regular: #e5e7eb;
+  --el-text-color-secondary: #cbd5e1;
+  --el-border-color: rgba(255,255,255,0.20);
+  --el-border-color-light: rgba(255,255,255,0.16);
+  --el-border-color-lighter: rgba(255,255,255,0.14);
+}
+html, body, #app {
+  background: radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,0.38), transparent 60%),
+    radial-gradient(1000px 700px at 110% 20%, rgba(14,165,233,0.30), transparent 60%),
+    linear-gradient(160deg, #0f172a 0%, #1e3a8a 55%, #0b2447 100%) !important;
+  background-attachment: fixed;
+  color: #f8fafc;
+}
+.el-container, .el-aside, .el-header, .el-main, .el-footer,
+.el-card, .el-card__body, .el-menu, .el-menu-item, .el-sub-menu__title,
+.el-table, .el-table__header-wrapper, .el-table__body-wrapper,
+.el-dialog, .el-drawer, .el-dropdown-menu, .el-popover, .el-tooltip__popper,
+.el-tabs__content, .el-form, .el-collapse, .el-collapse-item__wrap {
+  background: rgba(255,255,255,0.10) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28) !important;
+  color: #f8fafc !important;
+}
+.el-aside { border-radius: 0 20px 20px 0 !important; }
+.el-menu-item.is-active, .el-menu-item:hover, .el-sub-menu__title:hover {
+  background: rgba(255,255,255,0.16) !important;
+  border-radius: 14px !important;
+}
+.el-button, .el-input__wrapper, .el-textarea__inner, .el-select__wrapper,
+.el-input-number, .el-date-editor, .el-pagination button, .el-pagination .el-pager li {
+  background: rgba(255,255,255,0.12) !important;
+  border: 1px solid rgba(255,255,255,0.20) !important;
+  border-radius: 14px !important;
+  color: #f8fafc !important;
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: none !important;
+}
+.el-button--primary {
+  background: rgba(37,99,235,0.75) !important;
+  border-color: rgba(255,255,255,0.30) !important;
+}
+.el-input__inner, .el-textarea__inner { color: #f8fafc !important; }
+.el-input__inner::placeholder, .el-textarea__inner::placeholder { color: rgba(226,232,240,0.65) !important; }
+.el-table th.el-table__cell, .el-table td.el-table__cell { background: transparent !important; border-color: rgba(255,255,255,0.12) !important; }
+.el-table tr:hover > td.el-table__cell { background: rgba(255,255,255,0.08) !important; }
+.el-dialog { border-radius: 24px !important; }
+.el-message, .el-notification {
+  background: rgba(15,23,42,0.88) !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+  border-radius: 16px !important;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  color: #f8fafc !important;
+}
+/* Mailbox list: never cut off a full email address, full width on phones. */
+.el-card, .el-menu-item, li, [class*="account"], [class*="mailbox"] {
+  overflow: visible !important;
+  white-space: normal !important;
+  text-overflow: clip !important;
+  word-break: break-all !important;
+  max-width: 100% !important;
+}
+@media (max-width: 768px) {
+  .el-container { flex-direction: column !important; }
+  .el-aside, aside {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    border-radius: 20px !important;
+  }
+  .el-main, main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 12px !important;
+  }
+  .el-card, .el-menu-item {
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+}
