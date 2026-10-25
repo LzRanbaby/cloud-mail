@@ -1,0 +1,73 @@
+/* Zone Mail liquid-glass skin (nezone standard) - full set, nothing else added.
+   Applied over the existing Cloud Mail Vue UI: dark #14101d base, translucent
+   panels with blur + saturate, 20px rounded corners, soft shadows. */
+:root {
+  --el-color-primary: #8b5cf6;
+  --el-color-primary-light-3: #a78bfa;
+  --el-color-primary-light-5: #c4b5fd;
+  --el-color-primary-light-7: #ddd6fe;
+  --el-color-primary-light-9: #ede9fe;
+  --el-bg-color: #14101d;
+  --el-bg-color-page: #14101d;
+  --el-fill-color: rgba(255,255,255,0.10);
+  --el-fill-color-light: rgba(255,255,255,0.08);
+  --el-fill-color-lighter: rgba(255,255,255,0.06);
+  --el-text-color-primary: #f8fafc;
+  --el-text-color-regular: #e5e7eb;
+  --el-text-color-secondary: #cbd5e1;
+  --el-border-color: rgba(255,255,255,0.20);
+  --el-border-color-light: rgba(255,255,255,0.16);
+  --el-border-color-lighter: rgba(255,255,255,0.14);
+}
+html, body, #app {
+  background: radial-gradient(1200px 800px at 20% -10%, rgba(99,102,241,0.35), transparent 60%),
+    radial-gradient(1000px 700px at 110% 20%, rgba(168,85,247,0.28), transparent 60%),
+    linear-gradient(160deg, #14101d 0%, #1e1b4b 55%, #0f172a 100%) !important;
+  background-attachment: fixed;
+  color: #f8fafc;
+}
+.el-container, .el-aside, .el-header, .el-main, .el-footer,
+.el-card, .el-card__body, .el-menu, .el-menu-item, .el-sub-menu__title,
+.el-table, .el-table__header-wrapper, .el-table__body-wrapper,
+.el-dialog, .el-drawer, .el-dropdown-menu, .el-popover, .el-tooltip__popper,
+.el-tabs__content, .el-form, .el-collapse, .el-collapse-item__wrap {
+  background: rgba(255,255,255,0.10) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28) !important;
+  color: #f8fafc !important;
+}
+.el-aside { border-radius: 0 20px 20px 0 !important; }
+.el-menu-item.is-active, .el-menu-item:hover, .el-sub-menu__title:hover {
+  background: rgba(255,255,255,0.16) !important;
+  border-radius: 14px !important;
+}
+.el-button, .el-input__wrapper, .el-textarea__inner, .el-select__wrapper,
+.el-input-number, .el-date-editor, .el-pagination button, .el-pagination .el-pager li {
+  background: rgba(255,255,255,0.12) !important;
+  border: 1px solid rgba(255,255,255,0.20) !important;
+  border-radius: 14px !important;
+  color: #f8fafc !important;
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: none !important;
+}
+.el-button--primary {
+  background: rgba(124,58,237,0.65) !important;
+  border-color: rgba(255,255,255,0.30) !important;
+}
+.el-input__inner, .el-textarea__inner { color: #f8fafc !important; }
+.el-input__inner::placeholder, .el-textarea__inner::placeholder { color: rgba(226,232,240,0.65) !important; }
+.el-table th.el-table__cell, .el-table td.el-table__cell { background: transparent !important; border-color: rgba(255,255,255,0.12) !important; }
+.el-table tr:hover > td.el-table__cell { background: rgba(255,255,255,0.08) !important; }
+.el-dialog { border-radius: 24px !important; }
+.el-message, .el-notification {
+  background: rgba(30,27,75,0.85) !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+  border-radius: 16px !important;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  color: #f8fafc !important;
+}
