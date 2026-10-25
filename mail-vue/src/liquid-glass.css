@@ -1,6 +1,7 @@
-/* Zone Mail liquid-glass skin v2 - full blue, glass unchanged.
-   Dark blue base, translucent panels with blur + saturate, rounded corners.
-   Mobile: mailbox list takes full width, full email address is never cut off. */
+/* Zone Mail liquid-glass skin v3 - full blue, simple, fast.
+   Glass stays, but: no individual boxes around sidebar menu items,
+   no heavy blur/shadow on every item (that was causing lag on phones),
+   background is a static blue gradient (no fixed attachment repaint). */
 :root {
   --el-color-primary: #2563eb;
   --el-color-primary-light-3: #60a5fa;
@@ -20,39 +21,53 @@
   --el-border-color-lighter: rgba(255,255,255,0.14);
 }
 html, body, #app {
-  background: radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,0.38), transparent 60%),
-    radial-gradient(1000px 700px at 110% 20%, rgba(14,165,233,0.30), transparent 60%),
-    linear-gradient(160deg, #0f172a 0%, #1e3a8a 55%, #0b2447 100%) !important;
-  background-attachment: fixed;
+  background: linear-gradient(160deg, #0f172a 0%, #1e3a8a 55%, #0b2447 100%) !important;
   color: #f8fafc;
 }
-.el-container, .el-aside, .el-header, .el-main, .el-footer,
-.el-card, .el-card__body, .el-menu, .el-menu-item, .el-sub-menu__title,
-.el-table, .el-table__header-wrapper, .el-table__body-wrapper,
-.el-dialog, .el-drawer, .el-dropdown-menu, .el-popover, .el-tooltip__popper,
-.el-tabs__content, .el-form, .el-collapse, .el-collapse-item__wrap {
+/* Main panels only: one light glass layer, no per-item blur/shadow. */
+.el-container, .el-header, .el-main, .el-footer,
+.el-card, .el-dialog, .el-drawer, .el-dropdown-menu, .el-popover {
   background: rgba(255,255,255,0.10) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid rgba(255,255,255,0.18) !important;
   border-radius: 20px !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.28) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18) !important;
   color: #f8fafc !important;
 }
-.el-aside { border-radius: 0 20px 20px 0 !important; }
-.el-menu-item.is-active, .el-menu-item:hover, .el-sub-menu__title:hover {
-  background: rgba(255,255,255,0.16) !important;
-  border-radius: 14px !important;
+.el-header {
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
 }
+/* Sidebar + menu: NO boxes. Flat list, icon + text only, clean. */
+.el-aside, aside, .el-menu, .el-menu-item, .el-sub-menu__title {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  color: #f8fafc !important;
+}
+.el-menu-item, .el-sub-menu__title {
+  border-radius: 12px !important;
+  margin: 2px 8px !important;
+  padding-left: 12px !important;
+}
+.el-menu-item.is-active {
+  background: rgba(37,99,235,0.35) !important;
+}
+.el-menu-item:hover, .el-sub-menu__title:hover {
+  background: rgba(255,255,255,0.10) !important;
+}
+/* Buttons / inputs: light glass, no blur on every item (fast). */
 .el-button, .el-input__wrapper, .el-textarea__inner, .el-select__wrapper,
 .el-input-number, .el-date-editor, .el-pagination button, .el-pagination .el-pager li {
   background: rgba(255,255,255,0.12) !important;
   border: 1px solid rgba(255,255,255,0.20) !important;
   border-radius: 14px !important;
   color: #f8fafc !important;
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  backdrop-filter: blur(14px) saturate(150%);
   box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 .el-button--primary {
   background: rgba(37,99,235,0.75) !important;
@@ -60,15 +75,13 @@ html, body, #app {
 }
 .el-input__inner, .el-textarea__inner { color: #f8fafc !important; }
 .el-input__inner::placeholder, .el-textarea__inner::placeholder { color: rgba(226,232,240,0.65) !important; }
-.el-table th.el-table__cell, .el-table td.el-table__cell { background: transparent !important; border-color: rgba(255,255,255,0.12) !important; }
+.el-table, .el-table th.el-table__cell, .el-table td.el-table__cell { background: transparent !important; border-color: rgba(255,255,255,0.12) !important; }
 .el-table tr:hover > td.el-table__cell { background: rgba(255,255,255,0.08) !important; }
 .el-dialog { border-radius: 24px !important; }
 .el-message, .el-notification {
-  background: rgba(15,23,42,0.88) !important;
+  background: rgba(15,23,42,0.92) !important;
   border: 1px solid rgba(255,255,255,0.22) !important;
   border-radius: 16px !important;
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
   color: #f8fafc !important;
 }
 /* Mailbox list: never cut off a full email address, full width on phones. */
@@ -85,7 +98,6 @@ html, body, #app {
     width: 100% !important;
     max-width: 100% !important;
     flex: none !important;
-    border-radius: 20px !important;
   }
   .el-main, main {
     width: 100% !important;
