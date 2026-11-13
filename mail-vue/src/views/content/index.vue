@@ -9,6 +9,7 @@
       </span>
       <Icon class="icon" v-if="emailStore.contentData.showReply" v-perm="'email:send'"  @click="openReply" icon="fluent-mdl2:reply" width="19" height="19" />
       <Icon class="icon" v-if="emailStore.contentData.showReply" v-perm="'email:send'"  @click="openForward" icon="iconoir:arrow-up-right" width="20" height="20" />
+      <Icon class="icon" :class="{ 'icon-active': showingTranslation, 'icon-spinning': translating }" v-if="showTranslateBtn" @click="toggleTranslate" icon="material-symbols:translate" width="20" height="20" />
     </div>
     <div></div>
     <el-scrollbar class="scrollbar">
@@ -18,7 +19,7 @@
         </div>
         <div class="content">
           <div class="email-info">
-            <div>
+            <div class="address-meta">
               <div class="send"><span class="send-source">{{$t('from')}}</span>
                 <div class="send-name" ref="sendNameRef" :class="{ 'is-wrapped': senderWrapped }">
                   <span class="send-name-title">{{ email.name }}</span>
@@ -33,6 +34,7 @@
                 </div>
               </div>
               <div class="receive"><span class="source">{{$t('recipient')}}</span><span class="receive-email">{{  formateReceive(email.recipient) }}</span></div>
+              <div class="receive" v-if="ccText"><span class="source">{{$t('cc')}}</span><span class="receive-email">{{ ccText }}</span></div>
               <div class="date">
                 <div>{{ formatDetailDate(email.createTime) }}</div>
               </div>
@@ -41,7 +43,17 @@
             <el-alert v-if="email.status === 4" :closable="false" :title="$t('complained')" class="email-msg" type="warning" show-icon />
             <el-alert v-if="email.status === 5" :closable="false" :title="$t('delayed')" class="email-msg" type="warning" show-icon />
           </div>
-          <el-scrollbar class="htm-scrollbar" :class="!email.attList?.length ? 'bottom-distance' : ''">
+          <el-scrollbar v-if="showingTranslation" class="htm-scrollbar" :class="!email.attList?.length ? 'bottom-distance' : ''">
+            <div class="translated-wrap">
+              <div class="translated-bar">
+                <span v-if="translating">{{ $t('translating') }}</span>
+                <span v-else>{{ translatedTarget === 'en' ? $t('translatedToEn') : $t('translatedToZh') }}</span>
+                <el-button link type="primary" @click="showingTranslation = false">{{ $t('viewOriginal') }}</el-button>
+              </div>
+              <pre v-if="!translating" class="translated-text">{{ translatedText }}</pre>
+            </div>
+          </el-scrollbar>
+          <el-scrollbar v-else class="htm-scrollbar" :class="!email.attList?.length ? 'bottom-distance' : ''">
             <ShadowHtml class="shadow-html" :html="formatImage(email.content)" v-if="email.content" />
             <pre v-else class="email-text" >{{email.text}}</pre>
           </el-scrollbar>
@@ -99,6 +111,7 @@ import {allEmailDelete} from "@/request/all-email.js";
 import {useUiStore} from "@/store/ui.js";
 import {useI18n} from "vue-i18n";
 import {EmailUnreadEnum} from "@/enums/email-enum.js";
+import { translateText } from "@/request/translate.js";
 const { t } = useI18n()
 
 const uiStore = useUiStore();
@@ -112,6 +125,45 @@ let senderResizeObserver = null
 
 const showPreview = ref(false)
 const srcList = reactive([])
+const translating = ref(false)
+const translatedText = ref('')
+const translatedTarget = ref('')
+const showingTranslation = ref(false)
+
+const plainBody = computed(() => {
+  const raw = email.value.text || email.value.content || ''
+  return raw.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()
+})
+
+function isMostlyChinese(text) {
+  const cjk = (text.match(/[\u4e00-\u9fff]/g) || []).length
+  const latin = (text.match(/[A-Za-z]/g) || []).length
+  return cjk > latin
+}
+
+const showTranslateBtn = computed(() => {
+  return !!plainBody.value && !isMostlyChinese(plainBody.value)
+})
+
+async function toggleTranslate() {
+  if (translating.value) return
+  if (showingTranslation.value) { showingTranslation.value = false; return }
+  if (translatedText.value) { showingTranslation.value = true; return }
+  translating.value = true
+  showingTranslation.value = true
+  try {
+    const data = await translateText(email.value.content || email.value.text || '')
+    translatedText.value = data?.translatedText || ''
+    translatedTarget.value = data?.targetLang || 'zh'
+    if (!translatedText.value) showingTranslation.value = false
+  } catch (e) {
+    console.error(e)
+    showingTranslation.value = false
+    ElMessage({ message: t('translateFailed'), type: 'error', plain: true })
+  } finally {
+    translating.value = false
+  }
+}
 
 
 const email = computed(() => emailStore.contentData.email || {
@@ -121,6 +173,15 @@ const email = computed(() => emailStore.contentData.email || {
   text: '',
   recipient: '[]',
 })
+
+watch(() => email.value?.emailId, () => {
+  translating.value = false
+  translatedText.value = ''
+  translatedTarget.value = ''
+  showingTranslation.value = false
+})
+
+const ccText = computed(() => formateReceive(email.value.cc))
 
 const sentViaEmail = computed(() => {
   const raw = String(email.value.senderEmail || '').trim()
@@ -327,6 +388,37 @@ const handleDelete = () => {
   overflow: hidden;
 }
 
+.icon-active {
+  color: var(--el-color-primary);
+}
+.icon-spinning {
+  animation: translate-spin 1s linear infinite;
+}
+.translated-wrap {
+  padding: 0 2px;
+}
+.translated-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 2px 10px;
+  font-size: 13px;
+  color: var(--el-text-color-secondary);
+}
+.translated-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--el-text-color-primary);
+  margin: 0;
+  font-family: inherit;
+}
+@keyframes translate-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 .header-actions {
   padding: 9px 15px 9px;
   display: flex;
@@ -467,10 +559,20 @@ const handleDelete = () => {
         margin-bottom: 15px;
       }
 
-      .send {
-        display: flex;
-        margin-bottom: 6px;
+      .address-meta {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        column-gap: 10px;
+        row-gap: 6px;
+        align-items: baseline;
+      }
 
+      .send,
+      .receive {
+        display: contents;
+      }
+
+      .send {
         .send-name {
           color: var(--regular-text-color);
           display: flex;
@@ -501,8 +603,6 @@ const handleDelete = () => {
       }
 
       .receive {
-        margin-bottom: 6px;
-        display: flex;
         .receive-email {
           max-width: 700px;
           word-break: break-word;
@@ -512,16 +612,15 @@ const handleDelete = () => {
         }
       }
 
-      .send-source {
-        white-space: nowrap;
-        font-weight: bold;
-        padding-right: 10px;
+      .date {
+        grid-column: 1 / -1;
       }
 
+      .send-source,
       .source {
         white-space: nowrap;
         font-weight: bold;
-        padding-right: 10px;
+        text-align: left;
       }
     }
   }

@@ -18,6 +18,7 @@
       </el-main>
     </el-container>
   </el-container>
+  <BottomNav />
   <writer ref="writerRef" />
 </template>
 
@@ -28,6 +29,7 @@ import Main from '@/layout/main/index.vue'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import {useUiStore} from "@/store/ui.js";
 import writer from '@/layout/write/index.vue'
+import BottomNav from '@/layout/bottom-nav/index.vue'
 
 const uiStore = useUiStore();
 const writerRef = ref({})
@@ -124,5 +126,11 @@ onBeforeUnmount(() => {
   display: flex;
   pointer-events: none;
   opacity: 0;
+}
+
+@media (max-width: 1024px) {
+  .main-container {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
 }
 </style>

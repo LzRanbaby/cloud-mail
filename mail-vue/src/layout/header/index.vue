@@ -2,6 +2,9 @@
   <div class="header">
     <div class="header-btn">
       <hanburger @click="changeAside"></hanburger>
+      <button type="button" class="account-switch-btn" title="切换邮箱" @click="openAccountPanel">
+        {{ formatName(userStore.user.email) }}
+      </button>
       <span class="breadcrumb-item">{{ $t(route.meta.title) }}</span>
     </div>
     <div v-perm="'email:send'" class="writer-box">
@@ -11,8 +14,8 @@
         :aria-label="$t('compose')"
         @click="openSend"
       >
-        <el-icon :size="21">
-          <Icon icon="material-symbols:edit-outline-sharp"/>
+        <el-icon :size="23">
+          <Icon icon="hugeicons:quill-write-01"/>
         </el-icon>
       </el-button>
     </div>
@@ -31,6 +34,12 @@
       :class="{ 'account-show': accountPanelShow }"
       @search="returnToList('send')"
       @reset="returnToList('send')"
+    />
+    <all-email-search
+      v-else-if="showAllMailSearch"
+      :class="{ 'account-show': accountPanelShow }"
+      @search="returnToList('all-email')"
+      @reset="returnToList('all-email')"
     />
     <div class="toolbar">
       <el-dropdown
@@ -106,6 +115,7 @@ import {hasPerm} from "@/perm/perm.js"
 import {useI18n} from "vue-i18n";
 import {setExtend} from "@/utils/day.js"
 import emailSearch from '@/components/email-search/index.vue'
+import allEmailSearch from '@/components/all-email-search/index.vue'
 import {useEmailStore} from '@/store/email.js'
 import {useSendStore} from '@/store/send.js'
 
@@ -122,13 +132,13 @@ const userCardVisible = ref(false)
 const outsidePointerEvents = ['mousedown', 'pointerup', 'mouseup', 'click', 'pointercancel']
 let blockOutsideClick = false
 const inboxSearchOptions = computed(() => [
-  {label: t('titleDesc'), type: 'subject'},
+  {label: t('subject'), type: 'subject'},
   {label: t('searchSummaryContent'), type: 'content'},
   {label: t('sender'), type: 'sender'},
   {label: t('searchSenderAddress'), type: 'senderAddress'},
 ])
 const sentSearchOptions = computed(() => [
-  {label: t('titleDesc'), type: 'subject'},
+  {label: t('subject'), type: 'subject'},
   {label: t('searchSummaryContent'), type: 'content'},
   {label: t('searchRecipientAddress'), type: 'recipientAddress'},
 ])
@@ -138,6 +148,9 @@ const showInboxSearch = computed(() =>
 )
 const showSentSearch = computed(() =>
   route.meta.name === 'send' || isMailboxDetail('sent')
+)
+const showAllMailSearch = computed(() =>
+  route.meta.name === 'all-email' || isMailboxDetail('all-mail')
 )
 
 function isMailboxDetail(mailbox) {
@@ -239,6 +252,10 @@ function openSend() {
 
 function changeAside() {
   uiStore.asideShow = !uiStore.asideShow
+}
+
+function openAccountPanel() {
+  uiStore.accountShow = true
 }
 
 function clickLogout() {
@@ -417,7 +434,16 @@ onBeforeUnmount(() => {
     flex: 1;
   }
 
+  .breadcrumb-item {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 40%;
+    text-align: center;
+  }
+
   .toolbar {
+    padding-left: 5px;
     flex-shrink: 0;
   }
 }
@@ -456,6 +482,30 @@ onBeforeUnmount(() => {
   align-items: center;
   height: 100%;
   min-width: 0;
+}
+
+.account-switch-btn {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .account-switch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #93c5fd, #c4b5fd, #f9a8d4);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+  }
 }
 
 .breadcrumb-item {
