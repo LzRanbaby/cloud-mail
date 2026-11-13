@@ -24,7 +24,7 @@
       @click="go(item)"
     >
       <span class="nav-content">
-        <span class="nav-icon"><Icon :icon="item.icon" width="24" height="24" /></span>
+        <span class="nav-icon"><Icon :icon="item.icon" width="20" height="20" /></span>
         <span class="nav-label">{{ $t(item.label) }}</span>
       </span>
     </button>
@@ -279,7 +279,7 @@ onBeforeUnmount(() => {
 
 .nav-icon {
   display: inline-flex;
-  transform: scale(calc(1 + var(--mag, 0) * 0.2));
+  transform: scale(calc(1 + var(--mag, 0) * 0.1));
   transform-origin: center;
   transition: transform 0.12s ease-out;
 }
@@ -290,10 +290,10 @@ onBeforeUnmount(() => {
   opacity: 0;
   overflow: hidden;
   white-space: nowrap;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #0f172a;
-  transform: scale(calc(1 + var(--mag, 0) * 0.45));
+  transform: scale(calc(1 + var(--mag, 0) * 0.15));
   transform-origin: left center;
   transition:
     max-width 0.25s ease,
