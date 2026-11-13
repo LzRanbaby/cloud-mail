@@ -7,18 +7,6 @@
       </button>
       <span class="breadcrumb-item">{{ $t(route.meta.title) }}</span>
     </div>
-    <div v-perm="'email:send'" class="writer-box">
-      <el-button
-        class="writer"
-        size="default"
-        :aria-label="$t('compose')"
-        @click="openSend"
-      >
-        <el-icon :size="23">
-          <Icon icon="hugeicons:quill-write-01"/>
-        </el-icon>
-      </el-button>
-    </div>
     <email-search
       v-if="showInboxSearch"
       :store="emailStore"
@@ -246,10 +234,6 @@ function changeLang(lang) {
   settingStore.lang = lang
 }
 
-function openSend() {
-  uiStore.writerRef.open()
-}
-
 function changeAside() {
   uiStore.asideShow = !uiStore.asideShow
 }
@@ -445,35 +429,6 @@ onBeforeUnmount(() => {
   .toolbar {
     padding-left: 5px;
     flex-shrink: 0;
-  }
-}
-
-.writer-box {
-  display: none;
-
-  @media (max-width: 767px) {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 0;
-    flex-shrink: 0;
-
-    .writer {
-      width: 32px;
-      height: 32px;
-      padding: 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      --el-button-bg-color: transparent;
-      --el-button-border-color: transparent;
-      --el-button-hover-bg-color: transparent;
-      --el-button-hover-border-color: transparent;
-      --el-button-active-bg-color: transparent;
-      --el-button-active-border-color: transparent;
-      --el-button-outline-color: transparent;
-    }
   }
 }
 
