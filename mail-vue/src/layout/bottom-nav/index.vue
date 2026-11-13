@@ -24,7 +24,6 @@
     >
       <span class="nav-content">
         <span class="nav-icon"><Icon :icon="item.icon" width="20" height="20" /></span>
-        <span class="nav-label">{{ $t(item.label) }}</span>
       </span>
     </button>
   </nav>
