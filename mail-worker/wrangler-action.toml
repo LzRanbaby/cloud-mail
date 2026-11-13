@@ -1,3 +1,4 @@
+# Bottom-nav: slide magnifies icons only, glass capsule, unified Solar icons.
 # UI fixes: sidebar pure white, smaller bottom-nav, compose moved to FAB.
 # D1 uses real production database id (shared); test worker sees real emails.
 # Test deploy: R2 bucket omitted (account has no R2 enabled); attachment storage falls back to KV.
