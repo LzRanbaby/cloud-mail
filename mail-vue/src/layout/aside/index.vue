@@ -9,7 +9,7 @@
         <Icon icon="hugeicons:quill-write-01" width="22" height="22" />
         <span>{{ $t('compose') }}</span>
       </button>
-      <el-menu :collapse="false" text-color="#fff" active-text-color="#fff" style="margin-top: 6px">
+      <el-menu :collapse="false" text-color="#0f172a" active-text-color="#2563eb" style="margin-top: 6px">
         <el-menu-item @click="router.push({name: 'email'})" index="email"
                       :class="route.meta.name === 'email' ? 'choose-item' : ''">
           <Icon icon="hugeicons:mailbox-01" width="20" height="20" />
@@ -114,7 +114,7 @@ function openCompose() {
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
-  color: #ffffff;
+  color: #0f172a;
   transition: all 0.3s ease;
   max-width: 240px;
   padding: 0 10px;
@@ -179,7 +179,7 @@ function openCompose() {
 .manage-title {
   margin-top: 12px;
   padding-left: 20px;
-  color: #fff;
+  color: #64748b;
 }
 
 .el-menu-item {
@@ -197,7 +197,7 @@ function openCompose() {
 
 @media (hover: hover) {
   .el-menu-item:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
+    background: rgba(15, 23, 42, 0.05) !important;
   }
 }
 
