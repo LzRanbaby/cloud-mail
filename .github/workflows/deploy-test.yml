@@ -15,7 +15,7 @@ jobs:
 
     env:
       NAME: 'zone-mail-test'
-      CUSTOM_DOMAIN: ''
+      CUSTOM_DOMAIN: 'mail.zone.my.id'
       DOMAIN: ${{ secrets.DOMAIN || vars.DOMAIN }}
       ADMIN: ${{ secrets.ADMIN || vars.ADMIN }}
       JWT_SECRET: ${{ secrets.JWT_SECRET || vars.JWT_SECRET }}
