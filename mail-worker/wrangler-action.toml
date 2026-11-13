@@ -1,3 +1,4 @@
+# UI fixes: sidebar pure white, smaller bottom-nav, compose moved to FAB.
 # D1 uses real production database id (shared); test worker sees real emails.
 # Test deploy: R2 bucket omitted (account has no R2 enabled); attachment storage falls back to KV.
 # KV namespace auto-created for test (zone-mail-test); hardcoded production KV id not found in account.
