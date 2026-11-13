@@ -1,3 +1,4 @@
+# Test deploy: R2 bucket omitted (account has no R2 enabled); attachment storage falls back to KV.
 name = "${NAME}"
 main = "src/index.js"
 compatibility_date = "2025-06-04"
