@@ -11,7 +11,6 @@
     @pointercancel="onPointerUp"
   >
     <span class="nav-capsule" :class="{ dragging }" :style="capsuleStyle" aria-hidden="true" />
-    <span v-show="dragging" class="drag-bubble" :style="bubbleStyle" aria-hidden="true">{{ dragTitle }}</span>
     <button
       v-for="(item, index) in navItems"
       v-show="!item.perm || hasPerm(item.perm)"
@@ -55,12 +54,14 @@ let dragStartX = 0;
 let suppressClick = false;
 
 // Same five entries as the drawer sidebar in layout/aside.
+// All icons from one family (Solar line-duotone) so they share the same
+// stroke, weight and visual centre and line up cleanly.
 const navItems = [
-  { name: "email", label: "inbox", icon: "hugeicons:mailbox-01", perm: null, mailbox: "inbox" },
-  { name: "send", label: "sent", icon: "cil:send", perm: "email:send", mailbox: "sent" },
-  { name: "draft", label: "drafts", icon: "ep:document", perm: "email:send", mailbox: "draft" },
+  { name: "email", label: "inbox", icon: "solar:inbox-line-duotone", perm: null, mailbox: "inbox" },
+  { name: "send", label: "sent", icon: "solar:plain-2-line-duotone", perm: "email:send", mailbox: "sent" },
+  { name: "draft", label: "drafts", icon: "solar:document-line-duotone", perm: "email:send", mailbox: "draft" },
   { name: "star", label: "starred", icon: "solar:star-line-duotone", perm: null, mailbox: "starred" },
-  { name: "setting", label: "settings", icon: "fluent:settings-48-regular", perm: null, mailbox: null },
+  { name: "setting", label: "settings", icon: "solar:settings-line-duotone", perm: null, mailbox: null },
 ];
 
 function isActive(item) {
@@ -215,11 +216,14 @@ onBeforeUnmount(() => {
   top: 8px;
   height: calc(100% - 16px);
   border-radius: 28px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
-    0 6px 18px rgba(15, 23, 42, 0.14),
-    inset 0 1px 0 #fff;
+    0 8px 24px rgba(15, 23, 42, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.05);
   transition:
     left 0.38s cubic-bezier(0.32, 0.72, 0.24, 1),
     width 0.38s cubic-bezier(0.32, 0.72, 0.24, 1),
@@ -230,26 +234,9 @@ onBeforeUnmount(() => {
 .nav-capsule.dragging {
   transition: none;
   box-shadow:
-    0 10px 26px rgba(15, 23, 42, 0.25),
-    inset 0 1px 0 #fff;
-}
-
-.drag-bubble {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 10px);
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
-  padding: 7px 14px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #0f172a;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 2;
+    0 10px 28px rgba(15, 23, 42, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.05);
 }
 
 .nav-item {
@@ -279,9 +266,14 @@ onBeforeUnmount(() => {
 
 .nav-icon {
   display: inline-flex;
-  transform: scale(calc(1 + var(--mag, 0) * 0.1));
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  transform: scale(calc(1 + var(--mag, 0) * 0.25));
   transform-origin: center;
-  transition: transform 0.12s ease-out;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-label {
@@ -302,10 +294,16 @@ onBeforeUnmount(() => {
     transform 0.12s ease-out;
 }
 
-.nav-item.active .nav-label,
-.bottom-nav.dragging .nav-label {
+.nav-item.active .nav-label {
   max-width: 80px;
   opacity: 1;
   margin-left: 6px;
+}
+
+/* While sliding, hide every label: only the icons magnify, no text. */
+.bottom-nav.dragging .nav-label {
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
 }
 </style>
