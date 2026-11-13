@@ -152,12 +152,17 @@ function onPointerUp(e) {
   const rect = nav.getBoundingClientRect();
   const idx = tabIndexFromX((e.clientX || dragStartX) - rect.left);
   const item = navItems[idx];
+  // Snap to the nearest tab. Navigate first: go() is gated by
+  // suppressClick, so set the flag only after the navigation call,
+  // otherwise the release never lands and the capsule stays stuck
+  // between two tabs. The flag still blocks the click event that
+  // follows pointer-up.
+  if (item && !isActive(item)) go(item);
+  else nextTick(updateCapsule);
   suppressClick = true;
   setTimeout(() => {
     suppressClick = false;
   }, 350);
-  if (item && !isActive(item)) go(item);
-  else nextTick(updateCapsule);
 }
 
 function onResize() {
