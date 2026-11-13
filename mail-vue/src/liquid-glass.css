@@ -1,41 +1,53 @@
-/* Zone Mail liquid-glass skin v4 - full blue, simple, fast, original drawer sidebar.
-  Glass stays, but: no individual boxes around sidebar menu items,
-  no heavy blur/shadow on every item (that was causing lag on phones),
-  background is a static blue gradient (no fixed attachment repaint). */
+/* Zone Mail liquid-glass skin v5 - light "flowing glass" (see @eze_is_1 video).
+  Light canvas, near-white translucent glass, ~1px light grey-blue borders,
+  very faint soft shadows, blue as the only accent. Panels get blur;
+  list rows stay flat (no per-item blur/shadow) so phones stay fast. */
 :root {
   --el-color-primary: #2563eb;
   --el-color-primary-light-3: #60a5fa;
   --el-color-primary-light-5: #93c5fd;
   --el-color-primary-light-7: #bfdbfe;
   --el-color-primary-light-9: #dbeafe;
-  --el-bg-color: #0f172a;
-  --el-bg-color-page: #0f172a;
-  --el-fill-color: rgba(255,255,255,0.10);
-  --el-fill-color-light: rgba(255,255,255,0.08);
-  --el-fill-color-lighter: rgba(255,255,255,0.06);
-  --el-text-color-primary: #f8fafc;
-  --el-text-color-regular: #e5e7eb;
-  --el-text-color-secondary: #cbd5e1;
-  --el-border-color: rgba(255,255,255,0.20);
-  --el-border-color-light: rgba(255,255,255,0.16);
-  --el-border-color-lighter: rgba(255,255,255,0.14);
+  --el-bg-color: #ffffff;
+  --el-bg-color-page: #f5f6f8;
+  --el-bg-color-overlay: rgba(255,255,255,0.85);
+  --el-fill-color: rgba(15,23,42,0.05);
+  --el-fill-color-light: rgba(15,23,42,0.04);
+  --el-fill-color-lighter: rgba(15,23,42,0.03);
+  --el-text-color-primary: #0f172a;
+  --el-text-color-regular: #334155;
+  --el-text-color-secondary: #64748b;
+  --el-border-color: rgba(15,23,42,0.10);
+  --el-border-color-light: rgba(15,23,42,0.08);
+  --el-border-color-lighter: rgba(15,23,42,0.06);
 }
 html, body, #app {
-  background: linear-gradient(160deg, #0f172a 0%, #1e3a8a 55%, #0b2447 100%) !important;
-  color: #f8fafc;
+  background: #f5f6f8 !important;
+  color: #0f172a;
 }
 /* Main panels only: one light glass layer, no per-item blur/shadow. */
 .el-container, .el-header, .el-main, .el-footer,
 .el-card, .el-dialog, .el-drawer, .el-dropdown-menu, .el-popover {
-  background: rgba(255,255,255,0.10) !important;
-  border: 1px solid rgba(255,255,255,0.18) !important;
+  background: rgba(255,255,255,0.72) !important;
+  border: 1px solid rgba(15,23,42,0.08) !important;
   border-radius: 20px !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18) !important;
-  color: #f8fafc !important;
+  box-shadow: 0 8px 28px rgba(15,23,42,0.08) !important;
+  color: #0f172a !important;
 }
 .el-header {
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+}
+/* Faint flowing-light top edge on the header: pale blue -> lavender -> pink. */
+.el-header .header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(147,197,253,0.9), rgba(196,181,253,0.9), rgba(249,168,212,0.9));
+  pointer-events: none;
 }
 /* Sidebar + menu: NO boxes. Flat list, icon + text only, clean. */
 .el-aside, aside, .el-menu, .el-menu-item, .el-sub-menu__title {
@@ -45,7 +57,7 @@ html, body, #app {
   box-shadow: none !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
-  color: #f8fafc !important;
+  color: #0f172a !important;
 }
 .el-menu-item, .el-sub-menu__title {
   border-radius: 12px !important;
@@ -53,36 +65,38 @@ html, body, #app {
   padding-left: 12px !important;
 }
 .el-menu-item.is-active {
-  background: rgba(37,99,235,0.35) !important;
+  background: rgba(37,99,235,0.10) !important;
+  color: #2563eb !important;
 }
 .el-menu-item:hover, .el-sub-menu__title:hover {
-  background: rgba(255,255,255,0.10) !important;
+  background: rgba(15,23,42,0.05) !important;
 }
 /* Buttons / inputs: light glass, no blur on every item (fast). */
 .el-button, .el-input__wrapper, .el-textarea__inner, .el-select__wrapper,
 .el-input-number, .el-date-editor, .el-pagination button, .el-pagination .el-pager li {
-  background: rgba(255,255,255,0.12) !important;
-  border: 1px solid rgba(255,255,255,0.20) !important;
+  background: rgba(255,255,255,0.85) !important;
+  border: 1px solid rgba(15,23,42,0.10) !important;
   border-radius: 14px !important;
-  color: #f8fafc !important;
+  color: #0f172a !important;
   box-shadow: none !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 .el-button--primary {
-  background: rgba(37,99,235,0.75) !important;
-  border-color: rgba(255,255,255,0.30) !important;
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #fff !important;
 }
-.el-input__inner, .el-textarea__inner { color: #f8fafc !important; }
-.el-input__inner::placeholder, .el-textarea__inner::placeholder { color: rgba(226,232,240,0.65) !important; }
-.el-table, .el-table th.el-table__cell, .el-table td.el-table__cell { background: transparent !important; border-color: rgba(255,255,255,0.12) !important; }
-.el-table tr:hover > td.el-table__cell { background: rgba(255,255,255,0.08) !important; }
+.el-input__inner, .el-textarea__inner { color: #0f172a !important; }
+.el-input__inner::placeholder, .el-textarea__inner::placeholder { color: rgba(100,116,139,0.8) !important; }
+.el-table, .el-table th.el-table__cell, .el-table td.el-table__cell { background: transparent !important; border-color: rgba(15,23,42,0.08) !important; }
+.el-table tr:hover > td.el-table__cell { background: rgba(15,23,42,0.04) !important; }
 .el-dialog { border-radius: 24px !important; }
 .el-message, .el-notification {
-  background: rgba(15,23,42,0.92) !important;
-  border: 1px solid rgba(255,255,255,0.22) !important;
+  background: rgba(255,255,255,0.95) !important;
+  border: 1px solid rgba(15,23,42,0.10) !important;
   border-radius: 16px !important;
-  color: #f8fafc !important;
+  color: #0f172a !important;
 }
 /* Mailbox list: never cut off a full email address, full width on phones. */
 .el-card, .el-menu-item, li, [class*="account"], [class*="mailbox"] {
