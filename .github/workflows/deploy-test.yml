@@ -23,7 +23,7 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
       D1_DATABASE_ID: 'b1b1a63a-6ef5-4e6d-8e8c-b6d9e8feb810'
       KV_NAMESPACE_ID: '0fa01d4b299e481b9de060ece9e7785c'
-      R2_BUCKET_NAME: 'email'
+      R2_BUCKET_NAME: ''
       PROJECT_LINK: ${{ secrets.PROJECT_LINK || vars.PROJECT_LINK }}
       AI_MODEL: ${{ secrets.AI_MODEL || vars.AI_MODEL || '@cf/meta/llama-3.1-8b-instruct-fast' }}
       EMAIL: ${{ secrets.EMAIL || vars.EMAIL }}
