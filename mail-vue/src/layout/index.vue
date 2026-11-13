@@ -19,6 +19,16 @@
     </el-container>
   </el-container>
   <BottomNav />
+  <button
+    v-if="isMobile"
+    v-perm="'email:send'"
+    type="button"
+    class="compose-fab"
+    :aria-label="$t('compose')"
+    @click="uiStore.writerRef.open()"
+  >
+    <Icon icon="hugeicons:quill-write-01" width="24" height="24" />
+  </button>
   <writer ref="writerRef" />
 </template>
 
@@ -27,6 +37,7 @@ import Aside from '@/layout/aside/index.vue'
 import Header from '@/layout/header/index.vue'
 import Main from '@/layout/main/index.vue'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { Icon } from "@iconify/vue";
 import {useUiStore} from "@/store/ui.js";
 import writer from '@/layout/write/index.vue'
 import BottomNav from '@/layout/bottom-nav/index.vue'
@@ -132,5 +143,31 @@ onBeforeUnmount(() => {
   .main-container {
     padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
   }
+}
+
+/* Floating compose button (mobile only): the header compose button was
+   removed to declutter the top bar, so compose lives here instead,
+   just above the bottom nav, like Gmail's compose FAB. */
+.compose-fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+  z-index: 95;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45), 0 2px 8px rgba(15, 23, 42, 0.18);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.compose-fab:active {
+  background: #1d4ed8;
 }
 </style>
