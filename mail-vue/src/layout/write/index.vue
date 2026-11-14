@@ -164,7 +164,7 @@
 </template>
 <script setup>
 import tinyEditor from '@/components/tiny-editor/index.vue'
-import {h, nextTick, onMounted, onUnmounted, reactive, ref, toRaw, computed} from "vue";
+import {h, nextTick, onMounted, onUnmounted, reactive, ref, toRaw, computed, watch} from "vue";
 import {Icon} from "@iconify/vue";
 import {useUserStore} from "@/store/user.js";
 import {emailSend} from "@/request/email.js";
@@ -177,6 +177,7 @@ import sendPercent from "@/components/send-percent/index.vue"
 import {toOssDomain} from "@/utils/convert.js";
 import {formatDetailDate} from "@/utils/day.js";
 import {useSettingStore} from "@/store/setting.js";
+import {useUiStore} from "@/store/ui.js";
 import {userDraftStore} from "@/store/draft.js";
 import {useWriterStore} from "@/store/writer.js";
 import db from "@/db/db.js";
@@ -201,6 +202,9 @@ const accountStore = useAccountStore()
 const editor = ref({})
 const userStore = useUserStore();
 const show = ref(false);
+// Hide the floating compose button while the writer is open (mobile).
+const uiStore = useUiStore();
+watch(show, (v) => { uiStore.writerOpen = v; });
 const percent = ref(0)
 let percentMessage = null
 let sending = false
