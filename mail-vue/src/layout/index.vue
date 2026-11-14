@@ -20,7 +20,7 @@
   </el-container>
   <BottomNav />
   <button
-    v-if="isMobile"
+    v-if="isMobile && !uiStore.writerOpen"
     v-perm="'email:send'"
     type="button"
     class="compose-fab"
