@@ -829,6 +829,10 @@ function close() {
       border-radius: 0;
       border: 0;
       padding-top: 10px;
+      /* Lift the whole compose form (including the Send button at the
+         bottom) above the fixed bottom nav, so Send is never hidden
+         behind it on phones. Matches the main view's bottom offset. */
+      padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
     }
 
     @media (min-width: 1025px) {
