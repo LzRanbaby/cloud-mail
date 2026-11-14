@@ -295,6 +295,8 @@ const zh = {
     sendSuccessMsg: '发送成功',
     sendFailMsg: '发送失败',
     saveDraftConfirm: '是否保存草稿？',
+    saveDraft: '保存草稿',
+    discard: '放弃',
     delEmailsConfirm: '确认删除选中的邮件吗？',
     delOneEmailConfirm: '确认删除这个邮件吗？',
     sending: '邮件正在发送中',

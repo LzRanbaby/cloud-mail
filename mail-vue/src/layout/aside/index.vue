@@ -43,7 +43,7 @@
           <Icon icon="fluent:data-pie-20-regular" width="24" height="24" />
           <span class="menu-name" style="margin-left: 13px">{{$t('analytics')}}</span>
         </el-menu-item>
-        <el-menu-item @click="router.push({name: 'user'})" index="setting" v-perm="'user:query'"
+        <el-menu-item @click="router.push({name: 'user'})" index="user" v-perm="'user:query'"
                       :class="route.meta.name === 'user' ? 'choose-item' : ''">
           <Icon icon="si:user-alt-2-line" width="20" height="20" />
           <span class="menu-name" style="margin-left: 16px">{{$t('allUsers')}}</span>
@@ -53,7 +53,7 @@
           <Icon icon="fluent:mail-list-28-regular" width="22" height="22" />
           <span class="menu-name" style="margin-left: 15px">{{$t('allMail')}}</span>
         </el-menu-item>
-        <el-menu-item @click="router.push({name: 'role'})" index="setting" v-perm="'role:query'"
+        <el-menu-item @click="router.push({name: 'role'})" index="role" v-perm="'role:query'"
                       :class="route.meta.name === 'role' ? 'choose-item' : ''">
           <Icon icon="fluent:lock-closed-16-regular" width="22" height="22" />
           <span class="menu-name" style="margin-left: 15px">{{$t('permissions')}}</span>

@@ -406,6 +406,9 @@ onBeforeUnmount(() => {
   gap: 10px;
   grid-template-columns: auto 1fr;
   position: relative;
+  /* Keep the header (and the search panel inside it) above the mail list,
+     so the panel never interleaves with list rows. */
+  z-index: 20;
 }
 
 @media (max-width: 767px) {

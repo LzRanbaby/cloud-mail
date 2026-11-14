@@ -5,6 +5,15 @@
       <span class="search-placeholder-text" :class="{ 'has-search-text': savedSearchSummary }" :title="savedSearchSummary">
         {{ savedSearchSummary || t('searchMail') }}
       </span>
+      <button
+        v-if="savedSearchSummary"
+        type="button"
+        class="search-clear-btn"
+        :aria-label="t('reset')"
+        @click.stop="handleReset"
+      >
+        <Icon icon="material-symbols-light:close-rounded" width="18" height="18" />
+      </button>
     </div>
     <el-button
       class="mobile-search-button"
@@ -330,6 +339,24 @@ onBeforeUnmount(() => {
 
 .search-placeholder-text.has-search-text {
   color: var(--el-text-color-primary);
+}
+
+/* One-tap clear for an active search: previously the tag could only be
+   cleared by reopening the panel and pressing Reset. */
+.search-clear-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: var(--el-fill-color-dark);
+  color: var(--el-text-color-secondary);
+  cursor: pointer;
+  padding: 0;
 }
 
 .mobile-search-button {

@@ -295,6 +295,8 @@ const en = {
     sendSuccessMsg: 'Send successful',
     sendFailMsg: 'Send failed',
     saveDraftConfirm: 'Save draft?',
+    saveDraft: 'Save draft',
+    discard: 'Discard',
     delEmailsConfirm: 'Confirm deletion of selected emails?',
     delOneEmailConfirm: 'Confirm deletion of this email?',
     sending: 'Sending email...',

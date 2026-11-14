@@ -763,8 +763,8 @@ function close() {
   }
 
   ElMessageBox.confirm(t('saveDraftConfirm'), {
-    confirmButtonText: t('confirm'),
-    cancelButtonText: t('cancel'),
+    confirmButtonText: t('saveDraft'),
+    cancelButtonText: t('discard'),
     type: 'warning',
     distinguishCancelAndClose: true
   }).then(async () => {

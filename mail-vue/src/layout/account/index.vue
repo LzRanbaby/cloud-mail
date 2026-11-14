@@ -658,6 +658,9 @@ path[fill="#ffdda1"] {
 
   .item-choose {
     background: var(--choose-account-background);
+    /* Make the active account unmistakable: the pale background alone
+       is too subtle, so add a primary-colour ring. */
+    box-shadow: 0 0 0 2px var(--el-color-primary);
   }
 }
 
